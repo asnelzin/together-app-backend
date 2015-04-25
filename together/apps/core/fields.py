@@ -11,6 +11,7 @@ class LatLngField(DecimalField):
         defaults.update(kwargs)
         super(LatLngField, self).__init__(*args, **defaults)
 
+
 class LatField(LatLngField):
     default_validators = [RangeValidator(-90, 90)]
 
