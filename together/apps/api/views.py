@@ -89,10 +89,13 @@ class GetAllMembersCoordinates(View, JSONMixin):
             if not room_qs.exists():
                 return self.handle_400({'password': 'Комнаты с таким паролем не существует'})
 
-            context_dict = {
-                user.name: {'latitude': user.latitude, 'longitude': user.longitude}
+            context_dict = [
+                {
+                    'name': user.name,
+                    'coordinates': {'latitude': user.latitude, 'longitude': user.longitude}
+                }
                 for user in User.objects.filter(current_room__password=password).exclude(name=name)
-            }
+            ]
 
             json_content = self.data_to_json(context_dict)
             return HttpResponse(json_content, content_type='application/json', status=200)
